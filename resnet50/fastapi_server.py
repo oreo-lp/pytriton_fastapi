@@ -5,6 +5,7 @@ import numpy as np
 import torch
 
 
+
 config_client = AsyncioModelClient("localhost", "ResNet50")
 
 app = FastAPI()

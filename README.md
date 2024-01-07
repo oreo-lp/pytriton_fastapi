@@ -1,8 +1,6 @@
 # pytriton_fastapi
 基于pytriton对模型进行封装，并对triton client端使用fastapi进行微服务封装，供外部客户端进行接口的调用。本项目将主要对resnet50和bert模型进行测试，测试torch、onnx、trt等框架的并发性。  
-服务器：A4000  
-nproc: 12  
-cuda12.2  
+cuda12.2   
 
 ## 1. ResNet50模型
 ### 1.1 perf_analyzer 
@@ -21,16 +19,14 @@ sh use_perf_analyzer.sh
 | ins-1-bs16 | 119 | 523 |  
 | ins-1-bs32 | 107 | 596 |   
 | ins-1-bs64 | 101 | 628 |  
-
-从上的实验结果可以发现，拼batch可以增加模型的吞吐量！  
+从上的实验结果可以发现，拼batch可以增加模型的吞吐量！ 
 当bs设置为64的时候， triton server的推理bs基本上都拼不到64了，因此下文针对bs=32的时候，测试不同instance的推理效率。  
 
 | model | 时延(ms) | 吞吐量(infer/sec) | 
 | --- | --- | ---| 
 | ins-1-bs32 | 107| 596 |
 | ins-2-bs32 | 79| 812 | 
-| ins-4-bs32 | 117 | 542 |  
-
+| ins-4-bs32 | 117 | 542 |   
 从上面的实验结果也能发现，增加模型实例也可以增加模型的吞吐量  
 但是盲目增加实例个数并不一定能提高吞吐量，一定要根据需求来配置实例个数。  
 ### 1.2 使用fastapi测试
@@ -55,5 +51,3 @@ sh use_perf_analyzer.sh
 | ins-4-bs8 | 187 |  
 
 ## 2. BERT模型
-
-
